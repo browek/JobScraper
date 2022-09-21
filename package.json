@@ -11,7 +11,7 @@
     "start backend": "nx serve backend",
     "build backend": "nx build backend",
     "test backend": "nx test backend",
-    "serve all": "npx nx run-many --target=serve --projects=backend,frontend "
+    "start all": "npx nx run-many --target=serve --projects=backend,frontend "
   },
   "private": true,
   "dependencies": {
