@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@job-scraper/api": ["libs/api/src/index.ts"],
       "@job-scraper/ui": ["libs/ui/src/index.ts"]
     }
   },
