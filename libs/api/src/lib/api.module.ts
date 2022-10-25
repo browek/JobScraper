@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiController } from './api/api.controller';
 import { ApiService } from './api/api.service';
-import { PuppeteerService } from './puppeteer/puppeteer.service';
+import { ScrapperService } from './scrapper/scrapper.service';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { PuppeteerService } from './puppeteer/puppeteer.service';
     }),
   ],
   controllers: [ApiController],
-  providers: [ApiService, PuppeteerService],
+  providers: [ApiService, ScrapperService],
   exports: [],
 })
 export class ApiModule {}

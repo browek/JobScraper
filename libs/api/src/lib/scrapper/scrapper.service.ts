@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer'
 
 @Injectable()
-export class PuppeteerService {
+export class ScrapperService {
 
     async getData() {
         const browser = await puppeteer.launch(

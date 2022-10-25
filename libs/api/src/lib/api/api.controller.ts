@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { PuppeteerService } from '../puppeteer/puppeteer.service';
+import { PuppeteerService } from '../scrapper/scrapper.service';
 import { ApiService } from './api.service';
 
 @Controller('api')
