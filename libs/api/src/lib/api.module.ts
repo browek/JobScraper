@@ -12,7 +12,7 @@ import { ScrapperService } from './scrapper/scrapper.service';
       port: 3306,
       username: 'root',
       password: 'root',
-      database: 'job_scraper',
+      database: 'scrapper_database',
       entities: [],
       synchronize: true,
     }),
