@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiController } from './api/api.controller';
 import { ApiService } from './api/api.service';
-import { ScrapperService } from './scrapper/scrapper.service';
+import { Company } from './entities/Company';
+import { Offer } from './entities/Offer';
+import { ScrapperService } from './api/services/scrapper/scrapper.service';
+import { OfferService } from './api/services/offer/offer.service';
 
 @Module({
   imports: [
@@ -13,12 +16,13 @@ import { ScrapperService } from './scrapper/scrapper.service';
       username: 'root',
       password: 'root',
       database: 'scrapper_database',
-      entities: [],
+      entities: [Offer, Company],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Offer])
   ],
   controllers: [ApiController],
-  providers: [ApiService, ScrapperService],
-  exports: [],
+  providers: [ApiService, ScrapperService, OfferService],
+  exports: [OfferService],
 })
 export class ApiModule {}
