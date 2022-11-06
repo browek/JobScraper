@@ -16,26 +16,38 @@ export class ScrapperService {
             width: 1200,
             height: 800
         });
-        const data = await page.evaluate(() => {
+
+
+
+
+        const subLink = await page.evaluate(() => {
             const table = document.querySelector('#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-110u7ph > div:nth-child(1) > div > div')
             const offer = table.querySelector('div:nth-child(1)') 
 
-            const offerName = offer.querySelector('.jss247').textContent.trim() //name
+            // const offerName = offer.querySelector('.jss247').textContent.trim() //name
 
             // const offerCompany = offer.querySelector('.jss253').textContent //company
-            const offerLink = offer.querySelector('a').href.trim() //link
-            const offerSalary = offer.querySelector('.jss264').textContent.trim() //salary
+            const offerLink: string = offer.querySelector('a').href.trim() //link
+            // const offerSalary = offer.querySelector('.jss264').textContent.trim() //salary
+           return offerLink
 
-            const offerDetails = {
-                name: offerName,
-                // offerCompany,
-                link: offerLink,
-                salary: offerSalary
-            }
-            return offerDetails
+            // const offerDetails = {
+            //     // name: offerName,
+            //     // offerCompany,
+            //     link: offerLink,
+            //     // salary: offerSalary
+            // }
+            // return offerDetails
         });
-        this.createOffer(data)
+        this.offerService.findOneOffer(subLink)
+        .then(() => console.log('Existed link'))
+        .catch(() => {
+            this.newTab(browser, subLink)
+        })
         
+        
+
+        // // scroll
         // const scrollable_section = '#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-110u7ph > div:nth-child(1) > div'
         // await page.evaluate(selector => {
         //     const scrollableSection = document.querySelector(selector);
@@ -48,6 +60,11 @@ export class ScrapperService {
       
         // });
     }
+    async newTab(browser, subLink) {
+        const newOfferTab = await browser.newPage();
+        await newOfferTab.goto(subLink);
+    }
+    
     createOffer(offerDetails) {
         return this.offerService.createOffer(offerDetails)
     }

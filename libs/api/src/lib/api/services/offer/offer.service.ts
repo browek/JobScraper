@@ -13,7 +13,7 @@ export class OfferService {
 
     createOffer(offerDetails) {
 
-        this.findOneOffer(offerDetails)
+        this.findOneOffer(offerDetails.link)
         .then(() => {
             console.log('This item is alredy exist')
         })
@@ -27,7 +27,7 @@ export class OfferService {
         return await this.offerRepository.find()
     }
 
-    async findOneOffer(offerDetails) {
-        return await this.offerRepository.findOneByOrFail({link: offerDetails.link})
+    async findOneOffer(offerLink) {
+            return await this.offerRepository.findOneByOrFail({link: offerLink})
     }
 }

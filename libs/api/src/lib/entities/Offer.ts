@@ -7,13 +7,13 @@ export class Offer {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    name: string;
-    
     @Column({unique: true})
     link: string;
+
+    @Column({nullable: true})
+    name: string;
     
-    @Column()
+    @Column({nullable: true})
     salary: string;
 
     // @ManyToOne()
