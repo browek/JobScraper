@@ -17,28 +17,14 @@ export class ScrapperService {
             height: 800
         });
 
-
-
-
         const subLink = await page.evaluate(() => {
             const table = document.querySelector('#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-110u7ph > div:nth-child(1) > div > div')
             const offer = table.querySelector('div:nth-child(1)') 
-
-            // const offerName = offer.querySelector('.jss247').textContent.trim() //name
-
-            // const offerCompany = offer.querySelector('.jss253').textContent //company
             const offerLink: string = offer.querySelector('a').href.trim() //link
-            // const offerSalary = offer.querySelector('.jss264').textContent.trim() //salary
-           return offerLink
 
-            // const offerDetails = {
-            //     // name: offerName,
-            //     // offerCompany,
-            //     link: offerLink,
-            //     // salary: offerSalary
-            // }
-            // return offerDetails
+           return offerLink
         });
+
         this.offerService.findOneOffer(subLink)
         .then(() => console.log('Existed link'))
         .catch(() => {
@@ -46,7 +32,6 @@ export class ScrapperService {
         })
         
         
-
         // // scroll
         // const scrollable_section = '#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-110u7ph > div:nth-child(1) > div'
         // await page.evaluate(selector => {
@@ -63,6 +48,29 @@ export class ScrapperService {
     async newTab(browser, subLink) {
         const newOfferTab = await browser.newPage();
         await newOfferTab.goto(subLink);
+
+        const offerDetails = await newOfferTab.evaluate(() => {
+            // main
+            const mainTab = document.querySelector("#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-1pc9k2p > div.css-vuh3mm > div.css-1jqmyqn > div > div.css-1pphmz1 > div.css-1ex2t5a > div.css-1id4k1").textContent.trim()
+                // const name = mainTab.querySelector('div.css-1id4k1').textContent.trim()
+                // const salary = mainTab.querySelector("div.css-1wla3xl > span.css-a2pcn2").textContent.trim()
+            // info tab
+            const infoTab = document.querySelector('#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-1pc9k2p > div.css-vuh3mm > div.css-1kgdb8a')
+                const offerCompany = infoTab.querySelector('div:nth-child(1) > a').textContent.trim()
+                const offerDetails = {
+                       name: mainTab,
+                       offerCompany,
+                    //    link: subLink,
+                    //    salary
+                   }
+                return offerDetails
+                })
+        console.log(offerDetails)
+            // const offerName = offer.querySelector('.jss247').textContent.trim() //name
+            // const offerCompany = offer.querySelector('.jss253').textContent //company
+            // const offerSalary = offer.querySelector('.jss264').textContent.trim() //salary
+
+            // return offerDetails
     }
     
     createOffer(offerDetails) {
