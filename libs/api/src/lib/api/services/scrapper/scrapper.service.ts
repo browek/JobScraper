@@ -60,7 +60,8 @@ export class ScrapperService {
                 const expLvl = infoTab.querySelector('div:nth-child(3) > div.css-1ji7bvd').textContent.trim()
             // tech stack
             const techStackTab = document.querySelectorAll("#root > div > div.css-1xh23hj > div > div.css-1pc9k2p > div:nth-child(2) > div:nth-child(2) > div.css-1xc9aks > div > div")
-            const techStack = [{}];
+            const techStack = {};
+            // const techStack = [];
             techStackTab.forEach(elem => {
                 const key = elem.querySelector('div.css-1eroaug').textContent.trim()
                 const value = elem.querySelector('div.css-19mz16e').textContent.trim()
