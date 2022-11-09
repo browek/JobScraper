@@ -51,24 +51,33 @@ export class ScrapperService {
 
         const offerDetails = await newOfferTab.evaluate(() => {
             // main
-            const mainTab = document.querySelector("#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-1pc9k2p > div.css-vuh3mm > div.css-1jqmyqn > div > div.css-1pphmz1 > div.css-1ex2t5a > div.css-1id4k1").textContent.trim()
-                // const name = mainTab.querySelector('div.css-1id4k1').textContent.trim()
-                // const salary = mainTab.querySelector("div.css-1wla3xl > span.css-a2pcn2").textContent.trim()
-            // info tab
+            const mainTab = document.querySelector("#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-1pc9k2p > div.css-vuh3mm > div.css-1jqmyqn > div")
+                const name = mainTab.querySelector('div.css-1id4k1').textContent.trim()
+                const salary = mainTab.querySelector("div.css-1wla3xl").textContent.trim()
+            // info
             const infoTab = document.querySelector('#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-1pc9k2p > div.css-vuh3mm > div.css-1kgdb8a')
                 const offerCompany = infoTab.querySelector('div:nth-child(1) > a').textContent.trim()
+                const expLvl = infoTab.querySelector('div:nth-child(3) > div.css-1ji7bvd').textContent.trim()
+            // tech stack
+            const techStackTab = document.querySelectorAll("#root > div > div.css-1xh23hj > div > div.css-1pc9k2p > div:nth-child(2) > div:nth-child(2) > div.css-1xc9aks > div > div")
+            let techStack
+            techStackTab.forEach(elem => {
+                const key = elem.querySelector('div.css-1eroaug').textContent.trim()
+                const value = elem.querySelector('div.css-19mz16e').textContent.trim()
+                // techStack.push({key, value})
+            });
                 const offerDetails = {
-                       name: mainTab,
+                       name,
                        offerCompany,
-                    //    link: subLink,
-                    //    salary
+                       salary,
+                       expLvl,
+                       techStack
                    }
-                return offerDetails
-                })
+            return offerDetails
+        })
+        offerDetails.link = subLink
         console.log(offerDetails)
-            // const offerName = offer.querySelector('.jss247').textContent.trim() //name
-            // const offerCompany = offer.querySelector('.jss253').textContent //company
-            // const offerSalary = offer.querySelector('.jss264').textContent.trim() //salary
+
 
             // return offerDetails
     }
