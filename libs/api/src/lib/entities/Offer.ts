@@ -15,7 +15,18 @@ export class Offer {
     
     @Column({nullable: true})
     salary: string;
+    
+    @Column({nullable: true})
+    expLvl: string;
 
-    // @ManyToOne()
-    // company: Company
+    @Column({nullable: true})
+    company: string
+    
+    @Column("simple-json", {nullable: true})
+    techStack: {key: string}
+
 }
+
+
+
+ 
