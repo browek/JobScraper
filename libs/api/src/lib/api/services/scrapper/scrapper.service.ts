@@ -56,6 +56,10 @@ export class ScrapperService {
             }
             console.log(offerNumber, subLink.visibleOffers,allOffers)
         } while(offerNumber < allOffers)
+        page.close()
+            setTimeout(() => {  
+                    browser.close()
+            }, 60000)
     }
 
     async scroll(page) {
@@ -68,7 +72,6 @@ export class ScrapperService {
         // await page.evaluate(() => {
         //     const table = document.querySelector('#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-110u7ph > div:nth-child(1) > div > div')
         //     console.log(table.querySelector('div:nth-child(1)'))
-      
         // });
     }
     
@@ -115,6 +118,7 @@ export class ScrapperService {
         console.log(offerDetails)
 
         this.createOffer(offerDetails)
+        newOfferTab.close()
     }
     
     createOffer(offerDetails) {

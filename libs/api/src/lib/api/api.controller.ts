@@ -12,8 +12,12 @@ export class ApiController {
 
     @Get('records')
     async getUsers() {
-        // this.scrapperService.getData()
-
         return this.apiService.getRecords()
+    }
+    
+    @Get('scrap')
+    async scrap() {
+        this.scrapperService.getData()
+        return 'scraping'
     }
 }
