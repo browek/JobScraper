@@ -1,0 +1,27 @@
+.offerTable {
+    display: flex;
+    flex-direction: column;
+}
+
+.offer {
+    background-color: rgb(238, 238, 238);
+    box-shadow: 1px 1px 4px 0px rgb(173, 173, 173);
+    margin: 8px;
+    border-radius: 6px;
+}
+
+.techStack {
+    display: inline-block;
+}
+
+.stack {
+    margin: 6px;
+}
+
+.title {
+    display: inline-block;
+}
+
+.offer > div {
+    margin: 6px;
+}
