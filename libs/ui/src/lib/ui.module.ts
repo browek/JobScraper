@@ -5,6 +5,10 @@ import { UiRoutingModule } from './ui-routing.module';
 import { JustjoinitComponent } from './feature-modules/justjoinit/justjoinit/component/justjoinit.component';
 import { HttpClientModule } from '@angular/common/http'
 import { OffersService } from './services/offers.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatIconModule } from '@angular/material/icon'
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 
 
@@ -14,10 +18,13 @@ import { OffersService } from './services/offers.service';
   imports: [
     CommonModule,
     UiRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule,
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [
     OffersService
   ]
 })
-export class UiModule {}
+export class UiModule { }

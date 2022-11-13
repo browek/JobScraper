@@ -1,25 +1,43 @@
-<p>justjoinit works!</p>
-<div class="offerTable">
-    <div class="offer" *ngFor="let offer of offers">
+<div class="justjoin--it">
+    <div class="header">
+        <h1>JustJoinIt</h1>
+        <div class="scrap-icon">
+            <mat-icon (click)="scrapData()">get_app</mat-icon>
+        </div>
+    </div>
 
-            <div>
-                <a href="{{offer.link}}" target="_blank">
-                {{offer.link}}
-                </a>
-            </div>
-            <div class="title">
-                <b>
-                    {{offer.name}}
-                </b>
-                <i>({{offer.company}})</i>
-            </div>
-            <div>Lvl: {{offer.expLvl}}</div>
-            <div>{{offer.salary}}</div>
-            <div class="techStack" *ngFor="let stack of offer.techStack | keyvalue">
-                <div class="stack">
-                    {{stack.key}}: {{stack.value}}
+    <div class="offerTable">
+        <div class="offer" *ngFor="let offer of offers">
+
+            <div class="content">
+                <div class="info">
+                    <div class="title">
+                        <b>
+                            {{offer.name}}
+                        </b>
+                        <i>({{offer.company}})</i>
+                    </div>
+                    <div>Lvl: {{offer.expLvl}}</div>
+                    <div>{{offer.salary}}</div>
+                </div>
+                <div>
+                    <div class="techStack" *ngFor="let stack of offer.techStack | keyvalue">
+                        <div class="stack">
+                            <div class="stack-key">
+                                {{stack.key}}:
+                            </div>
+                            <div class="stack-value">
+                                {{stack.value}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="link">
+                    <a href="{{offer.link}}" target="_blank">
+                        <mat-icon>arrow_right_alt</mat-icon>
+                    </a>
                 </div>
             </div>
-
+        </div>
     </div>
 </div>
