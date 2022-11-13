@@ -12,4 +12,8 @@ export class OffersService {
   getAllOffers() {
     return this.httpClient.get('http://localhost:3333/api/records')
   }
+
+  scrapData() {
+    return this.httpClient.get('http://localhost:3333/api/scrap')
+  }
 }
