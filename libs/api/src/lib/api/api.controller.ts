@@ -12,7 +12,7 @@ export class ApiController {
 
     @Get('records')
     async getUsers() {
-        this.scrapperService.getData()
+        // this.scrapperService.getData()
 
         return this.apiService.getRecords()
     }
