@@ -5,7 +5,8 @@ export enum Status {
     NEW = 'New',
     ACTIVE = 'Active',
     SENT = 'Sent',
-    REJECTED = 'Rejected'
+    REJECTED = 'Rejected',
+    ARCHIVED = 'Archived'
   }
 
 @Entity()
@@ -40,7 +41,7 @@ export class Offer {
         enum: Status,
         default: Status.NEW
     })
-    role: Status;
+    status: Status;
 }
 
 
