@@ -1,6 +1,13 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Company } from "./Company";
 
+export enum Status {
+    NEW = 'New',
+    ACTIVE = 'Active',
+    SENT = 'Sent',
+    REJECTED = 'Rejected'
+  }
+
 @Entity()
 export class Offer {
 
@@ -20,11 +27,20 @@ export class Offer {
     expLvl: string;
 
     @Column({nullable: true})
-    company: string
+    company: string;
+    
+    @Column({nullable: true})
+    img: string;
     
     @Column("simple-json", {nullable: true})
     techStack: {key: string}
 
+    @Column({
+        type: "enum",
+        enum: Status,
+        default: Status.NEW
+    })
+    role: Status;
 }
 
 
