@@ -8,6 +8,7 @@
 
     <div class="offerTable">
         <div class="offer" *ngFor="let offer of offers">
+            <mat-icon class="hot-icon" *ngIf="offer.status === 'New'">whatshot</mat-icon>
             <div class="content">
                 <div class="image-box">
                     <img src="{{offer.img}}" alt="offer img">
@@ -39,7 +40,7 @@
                         <mat-icon>exit_to_app</mat-icon>
                     </a>
                     <mat-icon>move_to_inbox</mat-icon>
-                    <mat-icon>whatshot</mat-icon>
+                    
                 </div>
             </div>
         </div>

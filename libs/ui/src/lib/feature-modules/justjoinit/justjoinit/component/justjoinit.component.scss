@@ -16,6 +16,7 @@
     margin: 12px;
     max-width: 1000px;
     width: 100%;
+    position: relative;
 }
 
 .content {
@@ -23,8 +24,6 @@
     grid-template-columns: 1fr 4fr 3fr 1fr;
     align-items: center;
 }
-
-.techStack {}
 
 .stack {
     padding: 6px;
@@ -96,4 +95,15 @@ a {
         max-width: 100px;
         max-height: 100px;
     }
+}
+
+.hot-icon {
+    margin: 8px;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: rgb(255, 81, 0);
+    float: right;
+    position: absolute;
+    right: 0;
 }
