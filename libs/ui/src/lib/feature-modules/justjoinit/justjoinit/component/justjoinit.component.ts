@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { OffersService } from 'libs/ui/src/lib/services/offers.service';
 
 
