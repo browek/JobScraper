@@ -28,6 +28,10 @@ export class OfferService {
     }
 
     async findOneOffer(offerLink) {
-            return await this.offerRepository.findOneByOrFail({link: offerLink})
+        return await this.offerRepository.findOneByOrFail({link: offerLink})
+    }
+
+    async changeOffer(body) {
+        return await this.offerRepository.save(body)
     }
 }

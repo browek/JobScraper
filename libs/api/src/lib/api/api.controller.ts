@@ -1,23 +1,27 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Put } from '@nestjs/common';
 import { ScrapperService } from './services/scrapper/scrapper.service';
-import { ApiService } from './api.service';
+import { OfferService } from './services/offer/offer.service';
 
 @Controller('api')
 export class ApiController {
     constructor(
-        private apiService: ApiService,
         private scrapperService: ScrapperService,
-
+        private offerService: OfferService
         ) { }
 
     @Get('records')
     async getUsers() {
-        return this.apiService.getRecords()
+        return this.offerService.findAllOffers()
     }
     
     @Get('scrap')
     async scrap() {
         this.scrapperService.getData()
         return 'scraping'
+    }
+
+    @Put('records')
+    async changeOffer(@Body() body) {
+        return this.offerService.changeOffer(body)
     }
 }
