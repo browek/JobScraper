@@ -18,7 +18,7 @@ export class ScrapperService {
 
     async scrap(link) {
         const browser = await puppeteer.launch({ 
-            headless: false,
+            headless: true,
             devtools: true,
             slowMo: 1000,
         });

@@ -15,5 +15,9 @@ export class OffersService {
 
   scrapData() {
     return this.httpClient.get('http://localhost:3333/api/scrap')
+  
+  }
+  putOffer(body: any) {
+    return this.httpClient.put('http://localhost:3333/api/records', body)
   }
 }

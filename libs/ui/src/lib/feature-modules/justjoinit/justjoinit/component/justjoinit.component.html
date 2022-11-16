@@ -41,12 +41,10 @@
                         </div>
                 
                     <div class="link-icons">
-                        <a href="{{offer.link}}" target="_blank">
-                            <mat-icon>exit_to_app</mat-icon>
-                        </a>
-                        <mat-icon>move_to_inbox</mat-icon>
-                        <mat-icon>send</mat-icon>
-                        <mat-icon>close</mat-icon>
+                        <mat-icon (click)="checkOffer(offer)">exit_to_app</mat-icon>
+                        <mat-icon (click)="archiveOffer(offer)">move_to_inbox</mat-icon>
+                        <mat-icon (click)="sentOffer(offer)">send</mat-icon>
+                        <mat-icon (click)="rejectOffer(offer)">close</mat-icon>
                     </div>
                 </div>
             </div>
