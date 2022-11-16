@@ -36,28 +36,21 @@ export class ScrapperService {
     
         let offerNumber = 0;
         do {
-            console.log('get link')
             const subLink = await page.evaluate((offerN) => {
                 console.log(offerN)
-                const table = document.querySelector('#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-110u7ph > div:nth-child(1) > div > div')
-                
-                // const offer = table.querySelector(`div:nth-child(${offerN})`) 
+                const table = document.querySelector('#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-110u7ph > div:nth-child(1) > div > div')              
                 const offerLink = table.querySelectorAll('a')[offerN].href.trim()
                 
-                // const offerLink: string = offer.querySelector('a').href.trim()
                 const visibleOffers = (table.childElementCount)
-                
                 
                 return {offerLink, visibleOffers}
             },offerNumber);
             
-            console.log(subLink.offerLink)
             this.offerService.findOneOffer(subLink.offerLink)
             .then(() => console.log('Existed link'))
             .catch(async () => {
                 await this.newTab(browser, subLink.offerLink)
             })
-            // console.log(subLink.visibleOffers)
             
             if(offerNumber>subLink.visibleOffers) {
                 this.scroll(page)
@@ -78,11 +71,6 @@ export class ScrapperService {
             const scrollableSection = document.querySelector(selector);
             scrollableSection.scrollTop = scrollableSection.scrollTop + 1000;
           }, scrollable_section);
-        // await browser.close();
-        // await page.evaluate(() => {
-        //     const table = document.querySelector('#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-110u7ph > div:nth-child(1) > div > div')
-        //     console.log(table.querySelector('div:nth-child(1)'))
-        // });
     }
     
     async newTab(browser, subLink) {
