@@ -6,7 +6,6 @@ export enum Status {
     ACTIVE = 'Active',
     SENT = 'Sent',
     REJECTED = 'Rejected',
-    ARCHIVED = 'Archived'
   }
 
 @Entity()
@@ -15,7 +14,7 @@ export class Offer {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({unique: true})
+    @Column({unique: true, nullable: false})
     link: string;
 
     @Column({nullable: true})
@@ -42,8 +41,10 @@ export class Offer {
         default: Status.NEW
     })
     status: Status;
-}
 
+    @Column()
+    archived: false
+}
 
 
  
