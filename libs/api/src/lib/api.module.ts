@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiController } from './api/api.controller';
-import { ApiService } from './api/api.service';
 import { Company } from './entities/Company';
 import { Offer } from './entities/Offer';
 import { ScrapperService } from './api/services/scrapper/scrapper.service';
@@ -22,7 +21,7 @@ import { OfferService } from './api/services/offer/offer.service';
     TypeOrmModule.forFeature([Offer])
   ],
   controllers: [ApiController],
-  providers: [ApiService, ScrapperService, OfferService],
+  providers: [ScrapperService, OfferService],
   exports: [OfferService],
 })
 export class ApiModule {}
