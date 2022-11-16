@@ -7,40 +7,46 @@
     </div>
 
     <div class="offerTable">
-        <div class="offer" *ngFor="let offer of offers">
-            <mat-icon class="hot-icon" *ngIf="offer.status === 'New'">whatshot</mat-icon>
-            <div class="content">
-                <div class="image-box">
-                    <img src="{{offer.img}}" alt="offer img">
+        <div *ngFor="let offer of offers">
+            <div class="offer" *ngIf="!offer.archived">
+                <div class="status-icons">
+                    <mat-icon class="hot-icon" *ngIf="offer.status === 'New'">whatshot</mat-icon>
+                    <mat-icon class="block-icon" *ngIf="offer.status === 'Rejected'">block</mat-icon>
+                    <mat-icon class="done-icon" *ngIf="offer.status === 'Sent'">done</mat-icon>
                 </div>
-                <div class="info">
-                    <div class="title">
-                        <b>
-                            {{offer.name}}
-                        </b>
-                        <i>({{offer.company}})</i>
+                <div class="content">
+                    <div class="image-box">
+                        <img src="{{offer.img}}" alt="offer img">
                     </div>
-                    <div>Lvl: {{offer.expLvl}}</div>
-                    <div>{{offer.salary}}</div>
-                </div>
-                <div>
-                    <div class="techStack" *ngFor="let stack of offer.techStack | keyvalue">
-                        <div class="stack">
-                            <div class="stack-key">
-                                {{stack.key}}:
-                            </div>
-                            <div class="stack-value">
-                                {{stack.value}}
+                    <div class="info">
+                        <div class="title">
+                            <b>
+                                {{offer.name}}
+                            </b>
+                            <i>({{offer.company}})</i>
+                        </div>
+                        <div>Lvl: {{offer.expLvl}}</div>
+                        <div>{{offer.salary}}</div>
+                    </div>
+                    <div>
+                        <div class="techStack" *ngFor="let stack of offer.techStack | keyvalue">
+                            <div class="stack">
+                                <div class="stack-key">
+                                    {{stack.key}}:
+                                </div>
+                                <div class="stack-value">
+                                    {{stack.value}}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="link">
-                    <a href="{{offer.link}}" target="_blank">
-                        <mat-icon>exit_to_app</mat-icon>
-                    </a>
-                    <mat-icon>move_to_inbox</mat-icon>
-                    
+                    <div class="link">
+                        <a href="{{offer.link}}" target="_blank">
+                            <mat-icon>exit_to_app</mat-icon>
+                        </a>
+                        <mat-icon>move_to_inbox</mat-icon>
+                        <mat-icon>send</mat-icon>
+                    </div>
                 </div>
             </div>
         </div>

@@ -97,13 +97,22 @@ a {
     }
 }
 
-.hot-icon {
+.status-icons {
     margin: 8px;
-    font-size: 16px;
-    width: 16px;
-    height: 16px;
-    color: rgb(255, 81, 0);
-    float: right;
     position: absolute;
-    right: 0;
+    right: 0; 
+    mat-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+    }
+    .hot-icon {
+        color: rgb(255, 81, 0);
+    }
+    .done-icon {
+        color: rgb(0, 255, 76);
+    }
+    .block-icon {
+        color: rgb(255, 0, 0);
+    }
 }
