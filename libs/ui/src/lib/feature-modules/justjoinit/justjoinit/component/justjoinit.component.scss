@@ -21,14 +21,14 @@
 
 .content {
     display: grid;
-    grid-template-columns: 1fr 4fr 3fr 1fr;
+    grid-template-columns: 1fr 5fr 5fr 1fr;
     align-items: center;
 }
 
 .stack {
     padding: 6px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 10px;
     .stack-key {
         text-align: end;
@@ -62,15 +62,24 @@ mat-icon {
     width: 40px;
 }
 
-.link {
+.link-icons {
     display: flex;
-    align-items: center;
-    text-align: center;
-    font-style: italic;
+    flex-direction: column;
+    // grid-template-columns: 1fr 1fr;
+    // gap: 20px;
+    // margin: 20px;
+    align-items: flex-end;
+    // text-align: center;
+    // font-style: italic;
+    // margin: 30px 0px 0px 0px;
     mat-icon {
-        font-size: 60px;
-        width: 60px;
-        height: 60px;
+        font-size: 30px;
+        width: 30px;
+        height: 30px;
+        
+    }:hover {
+        background-color: rgb(90, 90, 90);
+        cursor: pointer;
     }
 }
 
@@ -98,10 +107,11 @@ a {
 }
 
 .status-icons {
-    margin: 8px;
+    // margin: 18px;
     position: absolute;
-    right: 0; 
+    right: 40px; 
     mat-icon {
+        margin: 8px;
         width: 20px;
         height: 20px;
         font-size: 20px;
