@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Company } from "./Company";
 
 export enum Status {
@@ -43,7 +43,13 @@ export class Offer {
     status: Status;
 
     @Column({default: false})
-    archived: boolean
+    archived: boolean;
+
+    @CreateDateColumn()
+    createdDate: Date;
+
+    @UpdateDateColumn()
+    lastUpdate: Date;
 }
 
 
