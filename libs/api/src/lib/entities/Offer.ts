@@ -42,8 +42,8 @@ export class Offer {
     })
     status: Status;
 
-    @Column()
-    archived: false
+    @Column({default: false})
+    archived: boolean
 }
 
 
