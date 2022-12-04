@@ -5,6 +5,8 @@ import { Company } from './entities/Company';
 import { Offer } from './entities/Offer';
 import { ScrapperService } from './api/services/scrapper/scrapper.service';
 import { OfferService } from './api/services/offer/offer.service';
+import { OnApplicationBootstrap } from '@nestjs/common';
+
 
 @Module({
   imports: [
@@ -24,6 +26,11 @@ import { OfferService } from './api/services/offer/offer.service';
   providers: [ScrapperService, OfferService],
   exports: [OfferService],
 })
-export class ApiModule {
-  constructor(public scrapperService: ScrapperService) {};
+
+export class ApiModule implements OnApplicationBootstrap{
+  constructor(public scrapperService: ScrapperService) {}
+  onApplicationBootstrap() {
+    console.info('Start scraping')
+    this.scrapperService.getData()
+  }
 }
