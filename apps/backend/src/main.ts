@@ -3,6 +3,7 @@
  * This is only a minimal backend to get started.
  */
 
+import { ApiModule } from '@job-scraper/api';
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
@@ -15,6 +16,9 @@ async function bootstrap() {
   app.enableCors();
   const port = process.env.PORT || 3333;
   await app.listen(port);
+  const apiModule = app.get(ApiModule);
+  apiModule.scrapperService.getData()
+
   
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`

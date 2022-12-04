@@ -24,4 +24,6 @@ import { OfferService } from './api/services/offer/offer.service';
   providers: [ScrapperService, OfferService],
   exports: [OfferService],
 })
-export class ApiModule {}
+export class ApiModule {
+  constructor(public scrapperService: ScrapperService) {};
+}
