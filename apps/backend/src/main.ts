@@ -16,9 +16,6 @@ async function bootstrap() {
   app.enableCors();
   const port = process.env.PORT || 3333;
   await app.listen(port);
-  const apiModule = app.get(ApiModule);
-  apiModule.scrapperService.getData()
-
   
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiController } from './api/api.controller';
 import { Company } from './entities/Company';
@@ -28,9 +28,13 @@ import { OnApplicationBootstrap } from '@nestjs/common';
 })
 
 export class ApiModule implements OnApplicationBootstrap{
+  private readonly logger = new Logger(ApiModule.name, { timestamp: true });
+
   constructor(public scrapperService: ScrapperService) {}
+
   onApplicationBootstrap() {
-    console.info('Start scraping')
+
+    this.logger.verbose('Start scraping')
     this.scrapperService.getData()
   }
 }
