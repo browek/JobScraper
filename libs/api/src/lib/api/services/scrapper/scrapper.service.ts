@@ -8,15 +8,16 @@ export class ScrapperService {
 
     getData() {
         const linksTab = [
-            'https://justjoin.it/remote/javascript/junior',
-            'https://justjoin.it/remote/testing/junior'
-    ]
-    linksTab.forEach(link => {
-        this.scrap(link)
-    });
+            {name: 'JustJoinIt: js', link:'https://justjoin.it/remote/javascript/junior'},
+            {name: 'JustJoinIt: tester',link:'https://justjoin.it/remote/testing/junior'}
+        ]
+        linksTab.forEach(offers => {
+            this.scrap(offers)
+        });
+        
     }
 
-    async scrap(link) {
+    async scrap({name, link}) {
         const browser = await puppeteer.launch({ 
             headless: true,
             devtools: true,
@@ -37,7 +38,7 @@ export class ScrapperService {
         let offerNumber = 0;
         do {
             const subLink = await page.evaluate((offerN) => {
-                console.log(offerN)
+                // console.log(offerN)
                 const table = document.querySelector('#root > div.css-1smbjja > div.css-1xh23hj > div > div.css-110u7ph > div:nth-child(1) > div > div')              
                 const offerLink = table.querySelectorAll('a')[offerN].href.trim()
                 
@@ -47,20 +48,22 @@ export class ScrapperService {
             },offerNumber);
             
             this.offerService.findOneOffer(subLink.offerLink)
-            .then(() => console.log('Existed link'))
+            .then(() => console.log('\x1b[2m%s\x1b[0m', 'Existed link'))
             .catch(async () => {
+                console.log('\x1b[32m%s\x1b[0m', 'Getting data')
                 await this.newTab(browser, subLink.offerLink)
             })
             
             if(offerNumber>subLink.visibleOffers) {
                 this.scroll(page)
             }
-            console.log(offerNumber, subLink.visibleOffers,allOffers)
+            console.log('\x1b[34m%s\x1b[0m', name, '- Checking', offerNumber+1, '/',allOffers)
             offerNumber ++
         } while(offerNumber < allOffers)
         page.close()
             setTimeout(() => {  
                     browser.close()
+                    console.log('\x1b[36m%s\x1b[0m', name, '- End scraping')
             }, 60000)
     }
 
@@ -111,14 +114,14 @@ export class ScrapperService {
                 techStack,
                 img
             }
-            console.log(offerDetails)
+            // console.log(offerDetails)
             return offerDetails
         })
         offerDetails.link = subLink
-        console.log(offerDetails)
-
+        
         this.createOffer(offerDetails)
         newOfferTab.close()
+        console.log('\x1b[32m%s\x1b[0m', 'Added offer', offerDetails.name)
     }
     
     createOffer(offerDetails) {
