@@ -53,11 +53,18 @@
 }
 
 .menu-icons {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
 
+    .title {
+        margin: 0;
+    }
     mat-icon {
         cursor: pointer;
-        margin: 0px 20px;
+        
+    } 
+    * {
+        margin: 10px 20px;
     }
 }
 
