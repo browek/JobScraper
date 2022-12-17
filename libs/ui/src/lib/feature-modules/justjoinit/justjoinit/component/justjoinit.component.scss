@@ -52,8 +52,13 @@
     text-align: center;
 }
 
-.scrap-icon {
-    cursor: pointer;
+.menu-icons {
+    display: inline-block;
+
+    mat-icon {
+        cursor: pointer;
+        margin: 0px 20px;
+    }
 }
 
 mat-icon {
@@ -119,4 +124,8 @@ a {
     .block-icon {
         color: rgb(255, 0, 0);
     }
+}
+
+.orange-color {
+    color: orange;
 }

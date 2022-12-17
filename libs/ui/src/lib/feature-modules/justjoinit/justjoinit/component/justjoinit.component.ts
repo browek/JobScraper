@@ -17,6 +17,7 @@ export class JustjoinitComponent implements OnInit {
 
   offers: any;
   scrapMessage: any;
+  inArchives = false;
 
   constructor(
     private offersService: OffersService, 
@@ -45,7 +46,7 @@ export class JustjoinitComponent implements OnInit {
   }
 
   archiveOffer(offer: any) {
-    offer.archived = true
+    offer.archived = !offer.archived
     return this.putOffer(offer)
   }
 
@@ -60,6 +61,10 @@ export class JustjoinitComponent implements OnInit {
   putOffer(offer: any) {
     return this.offersService.putOffer(offer).subscribe(
       data => console.log(data))
+  }
+
+  goToArchivum() {
+    this.inArchives = !this.inArchives;
   }
 
   openSnackBar() {

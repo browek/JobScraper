@@ -1,14 +1,15 @@
 <div class="justjoinit">
     <div class="header">
         <h1>JustJoinIt</h1>
-        <div class="scrap-icon">
+        <div class="menu-icons">
             <mat-icon (click)="scrapData()">get_app</mat-icon>
+            <mat-icon (click)="goToArchivum()" [ngClass]="{'orange-color': inArchives}">archive</mat-icon>
         </div>
     </div>
 
     <div class="offerTable">
         <div *ngFor="let offer of offers">
-            <div class="offer" *ngIf="!offer.archived">
+            <div class="offer" *ngIf="offer.archived === inArchives">
                 <div class="status-icons">
                     <mat-icon class="hot-icon" *ngIf="offer.status === 'New'">whatshot</mat-icon>
                     <mat-icon class="block-icon" *ngIf="offer.status === 'Rejected'">block</mat-icon>
