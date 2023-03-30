@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Put } from '@nestjs/common';
+import { Body, Controller, Get, Put } from '@nestjs/common';
 import { ScrapperService } from './services/scrapper/scrapper.service';
 import { OfferService } from './services/offer/offer.service';
 

@@ -24,7 +24,11 @@ export class OfferService {
     }
 
     async findAllOffers() {
-        return await this.offerRepository.find()
+        return await this.offerRepository.find({
+            order: {
+                id: "DESC"
+            }
+        })
     }
 
     async findOneOffer(offerLink) {

@@ -31,8 +31,12 @@
                         </div>
                         <div>Lvl: {{offer.expLvl}}</div>
                         <div>{{offer.salary}}</div>
+                        <div>
+                            <p>
+                                Last Update: {{offer.lastUpdate | date: 'dd/M/yyyy'}}
+                            </p>
+                        </div>
                     </div>
-
                         <div class="techStack" >
                             <div class="stack" *ngFor="let stack of offer.techStack | keyvalue">
                                 <div class="stack-key">
