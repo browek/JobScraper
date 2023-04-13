@@ -17,7 +17,7 @@ export class OffersService {
     return this.httpClient.get('http://localhost:3333/api/scrap')
   
   }
-  putOffer(body: any) {
+  putOffer(body: undefined) {
     return this.httpClient.put('http://localhost:3333/api/records', body)
   }
 }

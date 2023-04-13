@@ -18,12 +18,6 @@ export class ScrapperService {
         linksTab.forEach(offers => {
             this.scrap(offers)
         });
-        // await sleep(100000)
-        // throw new Error('koniec zabawy')
-        // for(let i=0; i<linksTab.length; i++) {
-        //     await this.scrap(linksTab[i])
-        // }
-
     }
 
     async scrap({ name, link }) {

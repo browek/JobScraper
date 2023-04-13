@@ -35,6 +35,6 @@ export class ApiModule implements OnApplicationBootstrap{
   onApplicationBootstrap() {
 
     this.logger.verbose('Start scraping')
-    this.scrapperService.getData()
+    // this.scrapperService.getData()
   }
 }

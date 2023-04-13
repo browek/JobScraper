@@ -25,8 +25,8 @@ export class JustjoinitComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    this.offersService.getAllOffers().subscribe(
-      data =>  this.offers = data);
+    this.offersService.getAllOffers()
+    .subscribe(data =>  this.offers = data)
   }
 
   scrapData() {

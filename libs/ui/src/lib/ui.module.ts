@@ -1,30 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home/home.component';
 import { UiRoutingModule } from './ui-routing.module';
-import { JustjoinitComponent } from './feature-modules/justjoinit/justjoinit/component/justjoinit.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { OffersService } from './services/offers.service';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MatIconModule } from '@angular/material/icon'
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-
-
-
-
+import { PracujComponent } from './feature-modules/pracuj/component/pracuj.component';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
-  declarations: [HomeComponent, JustjoinitComponent],
+  declarations: [
+    PracujComponent,
+  ],
   imports: [
     CommonModule,
     UiRoutingModule,
     HttpClientModule,
-    FontAwesomeModule,
-    MatIconModule,
-    MatSnackBarModule
+    HomeModule
   ],
-  providers: [
-    OffersService
-  ]
+  providers: [OffersService],
 })
-export class UiModule { }
+export class UiModule {}
