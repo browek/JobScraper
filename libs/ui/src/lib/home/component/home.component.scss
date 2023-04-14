@@ -1,0 +1,6 @@
+:host ::ng-deep .mat-tab-header {
+    top: 0;
+    z-index: 1000; 
+    position: sticky;
+    background-color: white;
+}

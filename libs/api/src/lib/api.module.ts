@@ -1,11 +1,11 @@
 import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiController } from './api/api.controller';
-import { Company } from './entities/Company';
 import { Offer } from './entities/Offer';
-import { ScrapperService } from './api/services/scrapper/scrapper.service';
+import { JJITService } from './api/services/scrapper/JJIT.service';
 import { OfferService } from './api/services/offer/offer.service';
 import { OnApplicationBootstrap } from '@nestjs/common';
+import { PracujService } from './api/services/scrapper/pracuj.service';
 
 
 @Module({
@@ -17,24 +17,24 @@ import { OnApplicationBootstrap } from '@nestjs/common';
       username: 'root',
       password: 'root',
       database: 'scrapper_database',
-      entities: [Offer, Company],
+      entities: [Offer],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([Offer])
   ],
   controllers: [ApiController],
-  providers: [ScrapperService, OfferService],
+  providers: [JJITService, PracujService, OfferService],
   exports: [OfferService],
 })
 
 export class ApiModule implements OnApplicationBootstrap{
   private readonly logger = new Logger(ApiModule.name, { timestamp: true });
 
-  constructor(public scrapperService: ScrapperService) {}
+  constructor(public jjitService: JJITService) {}
 
   onApplicationBootstrap() {
 
     this.logger.verbose('Start scraping')
-    // this.scrapperService.getData()
+    // this.jjitService.getData()
   }
 }

@@ -5,7 +5,7 @@ import { OfferService } from '../offer/offer.service';
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 @Injectable()
-export class ScrapperService {
+export class JJITService {
     constructor(private offerService: OfferService) { }
 
     async getData() {
@@ -24,7 +24,7 @@ export class ScrapperService {
         const browser = await puppeteer.launch({
             headless: true,
             devtools: true,
-            slowMo: 100,
+            slowMo: 10,
         });
         const page = await browser.newPage();
         await page.goto(link, { timeout: 0 });

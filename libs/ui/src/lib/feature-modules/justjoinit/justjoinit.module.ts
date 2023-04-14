@@ -7,18 +7,18 @@ import { CommonModule } from "@angular/common";
 
 
 @NgModule({
-    declarations: [
-      JustjoinitComponent,
-    ],
-    imports: [
-      FontAwesomeModule,
-      MatIconModule,
-      MatSnackBarModule,
-      CommonModule
-    ],
-    exports: [
-      JustjoinitComponent
-    ],
-    providers: [],
-  })
-  export class JustjoinitModule {}
+  declarations: [
+    JustjoinitComponent,
+  ],
+  imports: [
+    FontAwesomeModule,
+    MatIconModule,
+    MatSnackBarModule,
+    CommonModule
+  ],
+  exports: [
+    JustjoinitComponent
+  ],
+  providers: [],
+})
+export class JustjoinitModule { }

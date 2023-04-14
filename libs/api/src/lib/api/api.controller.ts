@@ -1,11 +1,13 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
-import { ScrapperService } from './services/scrapper/scrapper.service';
+import { JJITService } from './services/scrapper/JJIT.service';
 import { OfferService } from './services/offer/offer.service';
+import { PracujService } from './services/scrapper/pracuj.service';
 
 @Controller('api')
 export class ApiController {
     constructor(
-        private scrapperService: ScrapperService,
+        private jjitService: JJITService,
+        private pracujService: PracujService,
         private offerService: OfferService
         ) { }
 
@@ -14,14 +16,21 @@ export class ApiController {
         return this.offerService.findAllOffers()
     }
     
-    @Get('scrap')
-    async scrap() {
-        this.scrapperService.getData()
-        return 'scraping'
-    }
-
     @Put('records')
     async changeOffer(@Body() body) {
         return this.offerService.changeOffer(body)
     }
+
+    @Get('scrapJJIT')
+    async scrapJJIT() {
+        this.jjitService.getData()
+        return 'scraping'
+    }
+
+    @Get('scrapPracuj')
+    async scrapPracuj() {
+        this.pracujService.getData()
+        return 'scraping'
+    }
+
 }
