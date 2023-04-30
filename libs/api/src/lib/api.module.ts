@@ -1,11 +1,13 @@
 import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiController } from './api/api.controller';
-import { Offer } from './entities/Offer';
+import { OfferJJIT } from './entities/OfferJJIT';
 import { JJITService } from './api/services/scrapper/JJIT.service';
-import { OfferService } from './api/services/offer/offer.service';
+import { OfferJJITService } from './api/services/offer/offerJJIT.service';
 import { OnApplicationBootstrap } from '@nestjs/common';
 import { PracujService } from './api/services/scrapper/pracuj.service';
+import { OfferPracuj } from './entities/OfferPracuj';
+import { OfferPracujService } from './api/services/offer/offerPracuj.service';
 
 
 @Module({
@@ -17,14 +19,14 @@ import { PracujService } from './api/services/scrapper/pracuj.service';
       username: 'root',
       password: 'root',
       database: 'scrapper_database',
-      entities: [Offer],
+      entities: [OfferJJIT, OfferPracuj],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Offer])
+    TypeOrmModule.forFeature([OfferJJIT, OfferPracuj])
   ],
   controllers: [ApiController],
-  providers: [JJITService, PracujService, OfferService],
-  exports: [OfferService],
+  providers: [JJITService, PracujService, OfferJJITService, OfferPracujService],
+  exports: [OfferJJITService],
 })
 
 export class ApiModule implements OnApplicationBootstrap{
@@ -34,7 +36,7 @@ export class ApiModule implements OnApplicationBootstrap{
 
   onApplicationBootstrap() {
 
-    this.logger.verbose('Start scraping')
+    // this.logger.verbose('Start scraping')
     // this.jjitService.getData()
   }
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer'
-import { OfferService } from '../offer/offer.service';
+import { OfferJJITService } from '../offer/offerJJIT.service';
 
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 @Injectable()
 export class JJITService {
-    constructor(private offerService: OfferService) { }
+    constructor(private offerService: OfferJJITService) { }
 
     async getData() {
         const linksTab = [

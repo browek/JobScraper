@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Offer } from '../../../entities/Offer';
+import { OfferPracuj } from '../../../entities/OfferPracuj';
+
 
 @Injectable()
-export class OfferService {
+export class OfferPracujService {
 
     constructor(
-        @InjectRepository(Offer) 
-        private readonly offerRepository: Repository<Offer>
+        @InjectRepository(OfferPracuj) 
+        private readonly offerRepository: Repository<OfferPracuj>
     ) {}
 
     createOffer(offerDetails) {

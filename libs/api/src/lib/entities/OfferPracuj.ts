@@ -8,7 +8,7 @@ export enum Status {
   }
 
 @Entity()
-export class Offer {
+export class OfferPracuj {
 
     @PrimaryGeneratedColumn()
     id: number;
