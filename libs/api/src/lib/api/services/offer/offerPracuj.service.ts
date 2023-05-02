@@ -14,7 +14,10 @@ export class OfferPracujService {
 
     createOffer(offerDetails) {
 
-        this.findOneOffer(offerDetails.link)
+        this.findOneOfferBy({
+            name: offerDetails.name, 
+            company: offerDetails.company
+        })
         .then(() => {
             console.log('This item is alredy exist')
         })
@@ -34,6 +37,9 @@ export class OfferPracujService {
 
     async findOneOffer(offerLink) {
         return await this.offerRepository.findOneByOrFail({link: offerLink})
+    }
+    async findOneOfferBy(offer) {
+        return await this.offerRepository.findOneByOrFail(offer)
     }
 
     async changeOffer(body) {

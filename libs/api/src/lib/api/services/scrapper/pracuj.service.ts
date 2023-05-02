@@ -43,7 +43,10 @@ export class PracujService {
                     console.log('\x1b[32m%s\x1b[0m', 'Getting data')
                     await this.newTab(browser, link)
                 })
+            await sleep(1000)
         }
+        await sleep(10000)
+        await browser.close()
     }
 
     async newTab(browser, link) {
@@ -53,27 +56,50 @@ export class PracujService {
             width: 1000,
             height: 1800
         });
-        const offerDetails = await page.evaluate(() => {
-            const title = document.querySelector('h1[data-test="text-positionName"]').textContent.trim();
-            let companyName = document.querySelector('h2[data-test="text-employerName"]').textContent.trim();
-            const companyNameButton = document.querySelector('button[title="Dowiedz się więcej o pracodawcy"]').textContent.trim();
-            companyName = companyName.replace(companyNameButton, '')
-            const logoLink = document.querySelector('img[data-test="section-company-logo"]').getAttribute('src');
-            const stackSection = document.querySelectorAll('div[data-test="section-technologies"] > .offer-viewfjH4z3');
-            // const techStack = [stackSection].map(div => div.querySelectorAll(''));
-
-            const offer = {
-                title,
-                companyName,
-                logoLink,
-                // techStack
-            }
-
-
-            return offer
-        });
-        offerDetails.link = link
-        // this.createOffer(offerDetails)
+        try {
+            const offerDetails = await page.evaluate(() => {
+                const name = document.querySelector('h1[data-test="text-positionName"]').textContent.trim();
+                const companyName = document.querySelector('h2[data-test="text-employerName"]').textContent.trim();
+                const companyNameButton = document.querySelector('button[title="Dowiedz się więcej o pracodawcy"]').textContent.trim();
+                const company = companyName.replace(companyNameButton, '')
+                const img = document.querySelector('img[data-test="section-company-logo"]').getAttribute('src');
+                const stackSection = document.querySelectorAll('div[data-test="section-technologies"] > .offer-viewfjH4z3');
+                const expLvl = document.querySelector('div[data-test="sections-benefit-employment-type-name-text"]').textContent.trim() || 'Brak';
+                const salary = document.querySelector('strong[data-test="text-earningAmount"]').textContent.trim() || 'Brak';
+                const techStack = [];
+                
+                for(let i=0; i<stackSection.length; i++) {
+                    const name = stackSection[i].querySelector('h3').textContent
+    
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    const items = [...stackSection[i].querySelector('ul').querySelectorAll('li')].map(e => e ? e.textContent : 'inne')
+    
+                    const stack = {
+                        name,
+                        items
+                    }
+                    techStack.push(stack)
+                }
+                const offer = {
+                    name,
+                    company,
+                    img,
+                    techStack,
+                    expLvl,
+                    salary
+                }
+    
+    
+                return offer
+            });
+            offerDetails.link = link
+            console.log(offerDetails);
+            this.createOffer(offerDetails)
+        }catch(error){
+            console.log('Brak elementów na stronie');
+        }
+        await page.close()
     }
 
     createOffer(offerDetails) {

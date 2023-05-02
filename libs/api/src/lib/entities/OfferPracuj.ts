@@ -32,7 +32,7 @@ export class OfferPracuj {
     img: string;
     
     @Column("simple-json", {nullable: true})
-    techStack: {key: string}
+    techStack: {name: string, items: Array<string>}
 
     @Column({
         type: "enum",
