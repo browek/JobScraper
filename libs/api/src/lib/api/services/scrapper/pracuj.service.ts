@@ -35,18 +35,26 @@ export class PracujService {
             return links.map(link => (link as HTMLAnchorElement).href);
         });
 
-        for (let link of links) {
-            link = this.cutLink(link)
-            this.offerService.findOneOffer(link)
-                .then(() => console.log('\x1b[2m%s\x1b[0m', 'Existed link'))
-                .catch(async () => {
-                    console.log('\x1b[32m%s\x1b[0m', 'Getting data')
-                    await this.newTab(browser, link)
+        let s = 10
+        // eslint-disable-next-line prefer-const
+        for (let i=0; i < links.length; i++) {
+            console.log('\x1b[34m%s\x1b[0m', name, '- Checking', i + 1, '/', links.length)
+            const offerLink = this.cutLink(links[i])
+            this.offerService.findOneOffer(offerLink)
+                .then(() => {
+                    console.log('\x1b[2m%s\x1b[0m', 'Existed link')
+                    s = 10
                 })
-            await sleep(100)
+                .catch(async () => {
+                    s = 1000
+                    console.log('\x1b[32m%s\x1b[0m', 'Getting data')
+                    await this.newTab(browser, offerLink)
+                })
+                await sleep(s)
         }
         await sleep(10000)
         await browser.close()
+        console.log('\x1b[36m%s\x1b[0m', name, '- End scraping')
     }
 
     async newTab(browser, link) {
@@ -65,11 +73,16 @@ export class PracujService {
             let techStack
             let expLvl
             let salary
+            location
+
             try {
                 name = await page.$eval('h1[data-test="text-positionName"]', elem => elem.textContent.trim());
             } catch (e) {
                 // console.log(e);
             }
+
+            location = await page.$eval('a.offer-viewnqE8MW', elem => elem.textContent.trim());
+
             try {
                 await page.waitForSelector('h2[data-test="text-employerName"]')
                 const companyName = await page.$eval('h2[data-test="text-employerName"]', elem => elem.textContent.trim());
@@ -98,6 +111,7 @@ export class PracujService {
                 techStack = await page.evaluate(() => {
                     const stackSection = document.querySelectorAll('div[data-test="section-technologies"] > .offer-viewfjH4z3');
                     console.log(stackSection);
+                    const table = []
                     for (let i = 0; i < stackSection.length; i++) {
                         const name = stackSection[i].querySelector('h3').textContent
 
@@ -109,10 +123,9 @@ export class PracujService {
                             name,
                             items
                         }
-                        const table = []
                         table.push(stack)
-                        return table
                     }
+                    return table
                 })
             } catch (e) {
                 // console.log(e);
@@ -125,7 +138,8 @@ export class PracujService {
                 expLvl,
                 salary,
                 techStack,
-                link
+                link,
+                location
             }
             // console.log(offer);
             this.createOffer(offer)

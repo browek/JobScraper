@@ -44,6 +44,9 @@ export class OfferPracuj {
     @Column({default: false})
     archived: boolean;
 
+    @Column({nullable: false})
+    location: string
+
     @CreateDateColumn()
     createdDate: Date;
 

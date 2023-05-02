@@ -1,6 +1,6 @@
 <div class="justjoinit">
     <div class="header">
-        
+
         <div class="menu-icons">
             <mat-icon (click)="scrapData()">get_app</mat-icon>
             <div class="title">
@@ -28,6 +28,7 @@
                                 {{offer.name}}
                             </b>
                             <i>({{offer.company}})</i>
+                            <div><u>{{offer.location}}</u></div>
                         </div>
                         <div>Lvl: {{offer.expLvl}}</div>
                         <div>{{offer.salary}}</div>
@@ -37,19 +38,19 @@
                             </p>
                         </div>
                     </div>
-                        <div class="techStack" >
-                            <div class="stack" *ngFor="let stack of offer.techStack">
-                                <div class="stack-key">
-                                    {{stack.name}}:
-                                </div>
-                                <div class="stack-value">
-                                    <div *ngFor="let item of stack.items">
-                                        {{item}}
-                                    </div>
+                    <div class="techStack">
+                        <div class="stack" *ngFor="let stack of offer.techStack">
+                            <div class="stack-key">
+                                {{stack.name}}:
+                            </div>
+                            <div class="stack-value">
+                                <div *ngFor="let item of stack.items">
+                                    {{item}}
                                 </div>
                             </div>
                         </div>
-                
+                    </div>
+
                     <div class="link-icons">
                         <mat-icon (click)="checkOffer(offer)">exit_to_app</mat-icon>
                         <mat-icon (click)="archiveOffer(offer)">move_to_inbox</mat-icon>
