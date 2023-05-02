@@ -14,10 +14,11 @@ export class OfferPracujService {
 
     createOffer(offerDetails) {
 
-        this.findOneOfferBy({
-            name: offerDetails.name, 
-            company: offerDetails.company
-        })
+        this.findOneOffer(offerDetails.link)
+        // this.findOneOfferBy({
+        //     name: offerDetails.name, 
+        //     company: offerDetails.company
+        // })
         .then(() => {
             console.log('This item is alredy exist')
         })

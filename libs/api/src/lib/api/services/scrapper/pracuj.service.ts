@@ -20,7 +20,7 @@ export class PracujService {
 
     async scrap({ name, link }) {
         const browser = await puppeteer.launch({
-            headless: false,
+            headless: true,
             // devtools: true,
             slowMo: 10,
         });
@@ -31,19 +31,19 @@ export class PracujService {
             height: 1800
         });
 
-
         const links = await page.$$eval(('a[data-test="link-offer"]'), links => {
             return links.map(link => (link as HTMLAnchorElement).href);
         });
 
-        for (const link of links) {
+        for (let link of links) {
+            link = this.cutLink(link)
             this.offerService.findOneOffer(link)
                 .then(() => console.log('\x1b[2m%s\x1b[0m', 'Existed link'))
                 .catch(async () => {
                     console.log('\x1b[32m%s\x1b[0m', 'Getting data')
                     await this.newTab(browser, link)
                 })
-            await sleep(1000)
+            await sleep(100)
         }
         await sleep(10000)
         await browser.close()
@@ -56,47 +56,80 @@ export class PracujService {
             width: 1000,
             height: 1800
         });
+        link = this.cutLink(link)
+        await sleep(5000)
         try {
-            const offerDetails = await page.evaluate(() => {
-                const name = document.querySelector('h1[data-test="text-positionName"]').textContent.trim();
-                const companyName = document.querySelector('h2[data-test="text-employerName"]').textContent.trim();
-                const companyNameButton = document.querySelector('button[title="Dowiedz się więcej o pracodawcy"]').textContent.trim();
-                const company = companyName.replace(companyNameButton, '')
-                const img = document.querySelector('img[data-test="section-company-logo"]').getAttribute('src');
-                const stackSection = document.querySelectorAll('div[data-test="section-technologies"] > .offer-viewfjH4z3');
-                const expLvl = document.querySelector('div[data-test="sections-benefit-employment-type-name-text"]').textContent.trim() || 'Brak';
-                const salary = document.querySelector('strong[data-test="text-earningAmount"]').textContent.trim() || 'Brak';
-                const techStack = [];
-                
-                for(let i=0; i<stackSection.length; i++) {
-                    const name = stackSection[i].querySelector('h3').textContent
-    
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    const items = [...stackSection[i].querySelector('ul').querySelectorAll('li')].map(e => e ? e.textContent : 'inne')
-    
-                    const stack = {
-                        name,
-                        items
+            let name
+            let company
+            let img
+            let techStack
+            let expLvl
+            let salary
+            try {
+                name = await page.$eval('h1[data-test="text-positionName"]', elem => elem.textContent.trim());
+            } catch (e) {
+                // console.log(e);
+            }
+            try {
+                await page.waitForSelector('h2[data-test="text-employerName"]')
+                const companyName = await page.$eval('h2[data-test="text-employerName"]', elem => elem.textContent.trim());
+                const companyNameButton = await page.$eval('button.offer-viewzmDI89', elem => elem.textContent.trim());
+                company = companyName.replace(companyNameButton, '')
+            } catch (e) {
+                // console.log(e);
+            }
+            try {
+                await page.waitForSelector('img[data-test="section-company-logo"]')
+                img = await page.$eval('img[data-test="section-company-logo"]', elem => elem.getAttribute('src'));
+            } catch (e) {
+                // console.log(e);
+            }
+            try {
+                expLvl = await page.$eval('div[data-test="sections-benefit-employment-type-name-text"]', elem => elem.textContent.trim());
+            } catch (e) {
+                // console.log(e);
+            }
+            try {
+                salary = await page.$eval('strong[data-test="text-earningAmount"]', elem => elem.textContent.trim());
+            } catch (e) {
+                // console.log(e);
+            }
+            try {
+                techStack = await page.evaluate(() => {
+                    const stackSection = document.querySelectorAll('div[data-test="section-technologies"] > .offer-viewfjH4z3');
+                    console.log(stackSection);
+                    for (let i = 0; i < stackSection.length; i++) {
+                        const name = stackSection[i].querySelector('h3').textContent
+
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        const items = [...stackSection[i].querySelector('ul').querySelectorAll('li')].map(e => e ? e.textContent : 'inne')
+
+                        const stack = {
+                            name,
+                            items
+                        }
+                        const table = []
+                        table.push(stack)
+                        return table
                     }
-                    techStack.push(stack)
-                }
-                const offer = {
-                    name,
-                    company,
-                    img,
-                    techStack,
-                    expLvl,
-                    salary
-                }
-    
-    
-                return offer
-            });
-            offerDetails.link = link
-            console.log(offerDetails);
-            this.createOffer(offerDetails)
-        }catch(error){
+                })
+            } catch (e) {
+                // console.log(e);
+            }
+
+            const offer = {
+                name,
+                company,
+                img,
+                expLvl,
+                salary,
+                techStack,
+                link
+            }
+            // console.log(offer);
+            this.createOffer(offer)
+        } catch (error) {
             console.log('Brak elementów na stronie');
         }
         await page.close()
@@ -104,5 +137,14 @@ export class PracujService {
 
     createOffer(offerDetails) {
         return this.offerService.createOffer(offerDetails)
+    }
+
+    cutLink(link) {
+        link = new URL(link);
+        const params = new URLSearchParams(link.search);
+        params.delete('searchId');
+        link.search = params.toString();
+
+        return link.href
     }
 }

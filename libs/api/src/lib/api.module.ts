@@ -32,11 +32,12 @@ import { OfferPracujService } from './api/services/offer/offerPracuj.service';
 export class ApiModule implements OnApplicationBootstrap{
   private readonly logger = new Logger(ApiModule.name, { timestamp: true });
 
-  constructor(public jjitService: JJITService) {}
+  constructor(public jjitService: JJITService, public pracujService: PracujService) {}
 
   onApplicationBootstrap() {
 
-    // this.logger.verbose('Start scraping')
-    // this.jjitService.getData()
+    this.logger.verbose('Start scraping')
+    this.jjitService.getData()
+    this.pracujService.getData()
   }
 }

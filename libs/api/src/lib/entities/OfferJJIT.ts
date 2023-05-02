@@ -16,7 +16,7 @@ export class OfferJJIT {
     @Column({unique: true, nullable: false})
     link: string;
 
-    @Column({nullable: true})
+    @Column({nullable: false})
     name: string;
     
     @Column({nullable: true})
@@ -25,10 +25,10 @@ export class OfferJJIT {
     @Column({nullable: true})
     expLvl: string;
 
-    @Column({nullable: true})
+    @Column({nullable: false})
     company: string;
     
-    @Column({nullable: true})
+    @Column({nullable: false})
     img: string;
     
     @Column("simple-json", {nullable: true})
