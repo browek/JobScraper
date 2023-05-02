@@ -1,6 +1,6 @@
 import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ApiController } from './api/api.controller';
+import { JJITController } from './api/jjit.controller';
 import { OfferJJIT } from './entities/OfferJJIT';
 import { JJITService } from './api/services/scrapper/JJIT.service';
 import { OfferJJITService } from './api/services/offer/offerJJIT.service';
@@ -8,6 +8,7 @@ import { OnApplicationBootstrap } from '@nestjs/common';
 import { PracujService } from './api/services/scrapper/pracuj.service';
 import { OfferPracuj } from './entities/OfferPracuj';
 import { OfferPracujService } from './api/services/offer/offerPracuj.service';
+import { PracujController } from './api/pracuj.controller';
 
 
 @Module({
@@ -24,7 +25,7 @@ import { OfferPracujService } from './api/services/offer/offerPracuj.service';
     }),
     TypeOrmModule.forFeature([OfferJJIT, OfferPracuj])
   ],
-  controllers: [ApiController],
+  controllers: [JJITController, PracujController],
   providers: [JJITService, PracujService, OfferJJITService, OfferPracujService],
   exports: [OfferJJITService],
 })

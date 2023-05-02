@@ -1,1 +1,63 @@
-<p>pracuj works!</p>
+<div class="justjoinit">
+    <div class="header">
+        
+        <div class="menu-icons">
+            <mat-icon (click)="scrapData()">get_app</mat-icon>
+            <div class="title">
+                <h1>JustJoinIt</h1>
+            </div>
+            <mat-icon (click)="goToArchivum()" [ngClass]="{'orange-color': inArchives}">archive</mat-icon>
+        </div>
+    </div>
+
+    <div class="offerTable">
+        <div *ngFor="let offer of offers">
+            <div class="offer" *ngIf="offer.archived === inArchives">
+                <div class="status-icons">
+                    <mat-icon class="hot-icon" *ngIf="offer.status === 'New'">whatshot</mat-icon>
+                    <mat-icon class="block-icon" *ngIf="offer.status === 'Rejected'">block</mat-icon>
+                    <mat-icon class="done-icon" *ngIf="offer.status === 'Sent'">done</mat-icon>
+                </div>
+                <div class="content">
+                    <div class="image-box">
+                        <img src="{{offer.img}}" alt="offer img">
+                    </div>
+                    <div class="info">
+                        <div class="title">
+                            <b>
+                                {{offer.name}}
+                            </b>
+                            <i>({{offer.company}})</i>
+                        </div>
+                        <div>Lvl: {{offer.expLvl}}</div>
+                        <div>{{offer.salary}}</div>
+                        <div>
+                            <p>
+                                Last Update: {{offer.lastUpdate | date: 'dd/M/yyyy'}}
+                            </p>
+                        </div>
+                    </div>
+                        <div class="techStack" >
+                            <div class="stack" *ngFor="let stack of offer.techStack">
+                                <div class="stack-key">
+                                    {{stack.name}}:
+                                </div>
+                                <div class="stack-value">
+                                    <div *ngFor="let item of stack.items">
+                                        {{item}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                    <div class="link-icons">
+                        <mat-icon (click)="checkOffer(offer)">exit_to_app</mat-icon>
+                        <mat-icon (click)="archiveOffer(offer)">move_to_inbox</mat-icon>
+                        <mat-icon (click)="sentOffer(offer)">send</mat-icon>
+                        <mat-icon (click)="rejectOffer(offer)">close</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

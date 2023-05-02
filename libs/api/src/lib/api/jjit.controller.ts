@@ -4,19 +4,19 @@ import { OfferJJITService } from './services/offer/offerJJIT.service';
 import { PracujService } from './services/scrapper/pracuj.service';
 
 @Controller('api')
-export class ApiController {
+export class JJITController {
     constructor(
         private jjitService: JJITService,
         private pracujService: PracujService,
         private offerService: OfferJJITService
         ) { }
 
-    @Get('records')
+    @Get('jjit')
     async getUsers() {
         return this.offerService.findAllOffers()
     }
     
-    @Put('records')
+    @Put('jjit')
     async changeOffer(@Body() body) {
         return this.offerService.changeOffer(body)
     }
@@ -26,11 +26,4 @@ export class ApiController {
         this.jjitService.getData()
         return 'scraping'
     }
-
-    @Get('scrapPracuj')
-    async scrapPracuj() {
-        this.pracujService.getData()
-        return 'scraping'
-    }
-
 }

@@ -25,7 +25,7 @@ export class JustjoinitComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    this.offersService.getAllOffers()
+    this.offersService.getAllJJITOffers()
     .subscribe(data =>  this.offers = data)
   }
 
@@ -37,29 +37,29 @@ export class JustjoinitComponent implements OnInit {
 
   sentOffer(offer: any) {
     offer.status = 'Sent'
-    return this.putOffer(offer)
+    return this.putJJITOffer(offer)
   }
 
   rejectOffer(offer: any) {
     offer.status = 'Rejected'
-    return this.putOffer(offer)
+    return this.putJJITOffer(offer)
   }
 
   archiveOffer(offer: any) {
     offer.archived = !offer.archived
-    return this.putOffer(offer)
+    return this.putJJITOffer(offer)
   }
 
   checkOffer(offer: any) {
     if(offer.status === 'New') {
       offer.status = 'Active'
-      this.putOffer(offer)
+      this.putJJITOffer(offer)
     }
     window.open(offer.link, "_blank");
   }
 
-  putOffer(offer: any) {
-    return this.offersService.putOffer(offer).subscribe(
+  putJJITOffer(offer: any) {
+    return this.offersService.putJJITOffer(offer).subscribe(
       data => console.log(data))
   }
 
