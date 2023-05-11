@@ -11,12 +11,13 @@ export class PracujService {
 
     async getData() {
         const sites = [
-            { name: 'Pracuj.pl Rzeszów', link: 'https://www.pracuj.pl/praca/rzeszow;wp?rd=30&cc=5016%2C5015&et=1%2C17' },
+            { name: 'Pracuj.pl: js Rzeszów / remote', link: 'https://www.pracuj.pl/praca/rzeszow;wp?rd=30&cc=5016%2C5015&et=1%2C17' },
         ]
         sites.forEach(site => {
             this.scrap(site)
         });
     }
+
 
     async scrap({ name, link }) {
         const browser = await puppeteer.launch({
@@ -30,33 +31,57 @@ export class PracujService {
             width: 1000,
             height: 1800
         });
-
-        const links = await page.$$eval(('a[data-test="link-offer"]'), links => {
-            return links.map(link => (link as HTMLAnchorElement).href);
-        });
-
-        let s = 10
-        // eslint-disable-next-line prefer-const
-        for (let i=0; i < links.length; i++) {
-            console.log('\x1b[34m%s\x1b[0m', name, '- Checking', i + 1, '/', links.length)
-            const offerLink = this.cutLink(links[i])
-            this.offerService.findOneOffer(offerLink)
-                .then(() => {
-                    console.log('\x1b[2m%s\x1b[0m', 'Existed link')
-                    s = 10
-                })
-                .catch(async () => {
-                    s = 1000
-                    console.log('\x1b[32m%s\x1b[0m', 'Getting data')
-                    await this.newTab(browser, offerLink)
-                })
-                await sleep(s)
-        }
-        await sleep(10000)
+        await this.getLinks(browser, page, name)
+        await sleep(30000)
         await browser.close()
         console.log('\x1b[36m%s\x1b[0m', name, '- End scraping')
     }
 
+    async getLinks(browser, page, name) {
+        await page.waitForSelector('.cookies_cvyuaxh')
+        await page.$eval('.cookies_cvyuaxh', el => el.remove());
+        const links = await page.$$eval(('div.listing_c1dc6in8 > a[data-test="link-offer"]'), links => {
+            return links.map(link => (link as HTMLAnchorElement).href);
+        });
+        let s = 10
+        // eslint-disable-next-line prefer-const
+        for (let i = 0; i < links.length; i++) {
+            const offerLink = this.cutLink(links[i])
+            this.offerService.findOneOffer(offerLink)
+                .then(() => {
+                    console.log('\x1b[34m%s\x1b[0m', name, '- Checking', i + 1, '/', links.length, '\x1b[2m', 'Existed link')
+                    s = 10
+                })
+                .catch(async () => {
+                    s = 1000
+                    console.log('\x1b[34m%s\x1b[0m', name, '- Checking', i + 1, '/', links.length, '\x1b[32m', 'Getting data')
+                    await this.newTab(browser, offerLink)
+                })
+            await sleep(s)
+        }
+        try {
+            const path = 'button[data-test="top-pagination-next-button"]'
+            const clickable = await page.evaluate(()=> {
+                const hidden = document.querySelector('button.hidden[data-test="top-pagination-next-button"]')
+                if(hidden) {
+                    return false
+                } else {
+                    return true
+                }
+            }, path)
+            if(clickable) {
+                await page.click(path)
+                await this.getLinks(browser, page, name)
+            } else {
+                await sleep(3000)
+                page.close()
+            }
+
+            } catch (error) {
+            console.log(error);
+        }
+    }
+ 
     async newTab(browser, link) {
         const page = await browser.newPage();
         await page.goto(link, { timeout: 0 });
@@ -73,16 +98,21 @@ export class PracujService {
             let techStack
             let expLvl
             let salary
-            location
+            let location
+            let remote
 
             try {
                 name = await page.$eval('h1[data-test="text-positionName"]', elem => elem.textContent.trim());
             } catch (e) {
                 // console.log(e);
             }
-
-            location = await page.$eval('a.offer-viewnqE8MW', elem => elem.textContent.trim());
-
+            try {
+                location = await page.evaluate(() => {
+                    return document.querySelector('div[data-test="sections-benefit-workplaces"] > div > div').textContent.trim()
+                })
+            } catch (e) {
+                // console.log(e);
+            }
             try {
                 await page.waitForSelector('h2[data-test="text-employerName"]')
                 const companyName = await page.$eval('h2[data-test="text-employerName"]', elem => elem.textContent.trim());
@@ -104,6 +134,11 @@ export class PracujService {
             }
             try {
                 salary = await page.$eval('strong[data-test="text-earningAmount"]', elem => elem.textContent.trim());
+            } catch (e) {
+                // console.log(e);
+            }
+            try {
+                remote = await page.$eval('div[data-test="sections-benefit-work-modes-text"]', elem => elem.textContent.trim());
             } catch (e) {
                 // console.log(e);
             }
@@ -139,7 +174,8 @@ export class PracujService {
                 salary,
                 techStack,
                 link,
-                location
+                location,
+                remote
             }
             // console.log(offer);
             this.createOffer(offer)

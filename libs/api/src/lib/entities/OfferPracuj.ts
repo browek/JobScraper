@@ -44,8 +44,11 @@ export class OfferPracuj {
     @Column({default: false})
     archived: boolean;
 
-    @Column({nullable: false})
+    @Column({nullable: true})
     location: string
+
+    @Column({nullable: true})
+    remote: string
 
     @CreateDateColumn()
     createdDate: Date;

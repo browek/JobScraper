@@ -13,7 +13,6 @@ export class OfferPracujService {
     ) {}
 
     createOffer(offerDetails) {
-
         this.findOneOffer(offerDetails.link)
         // this.findOneOfferBy({
         //     name: offerDetails.name, 
@@ -36,7 +35,7 @@ export class OfferPracujService {
         })
     }
 
-    async findOneOffer(offerLink) {
+    async findOneOffer(offerLink) {     
         return await this.offerRepository.findOneByOrFail({link: offerLink})
     }
     async findOneOfferBy(offer) {

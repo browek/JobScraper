@@ -12,8 +12,8 @@ export class JJITService {
         const linksTab = [
             { name: 'JustJoinIt: js remote', link: 'https://justjoin.it/remote/javascript/junior' },
             { name: 'JustJoinIt: tester remote', link: 'https://justjoin.it/remote/testing/junior' },
-            { name: 'JustJoinIt: js rzeszow', link: 'https://justjoin.it/rzeszow/javascript/junior' },
-            { name: 'JustJoinIt: tester rzeszow', link: 'https://justjoin.it/rzeszow/testing/junior' }
+            { name: 'JustJoinIt: js Rzeszów', link: 'https://justjoin.it/rzeszow/javascript/junior' },
+            { name: 'JustJoinIt: tester Rzeszów', link: 'https://justjoin.it/rzeszow/testing/junior' }
         ]
         linksTab.forEach(offers => {
             this.scrap(offers)
@@ -52,16 +52,15 @@ export class JJITService {
                 }, offerNumber);
 
                 this.offerService.findOneOffer(subLink.offerLink)
-                    .then(() => console.log('\x1b[2m%s\x1b[0m', 'Existed link'))
+                    .then(() => console.log('\x1b[34m%s\x1b[0m', name, '- Checking', offerNumber, '/', allOffers, '\x1b[2m', 'Existed link'))
                     .catch(async () => {
-                        console.log('\x1b[32m%s\x1b[0m', 'Getting data')
+                        console.log('\x1b[34m%s\x1b[0m', name, '- Checking', offerNumber, '/', allOffers, '\x1b[32m', 'Getting data')
                         await this.newTab(browser, subLink.offerLink)
                     })
 
                 if (offerNumber > subLink.visibleOffers) {
                     this.scroll(page)
                 }
-                console.log('\x1b[34m%s\x1b[0m', name, '- Checking', offerNumber + 1, '/', allOffers)
                 offerNumber++
             } while (offerNumber < allOffers)
             page.close()
@@ -71,7 +70,7 @@ export class JJITService {
             }, 60000)
         } catch (error) {
             browser.close()
-            console.log(error);
+            // console.log(error);
         }
     }
 
